@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "931741357033",
+    "project_id": "bok-up-f5441",
+    "storage_bucket": "bok-up-f5441.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:931741357033:android:f89d9bd2e6bf0e46a6b178",
+        "android_client_info": {
+          "package_name": "com.example.bokup"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByxRITjgw8MnTXMWcOTWe4Jm_fiDlMvZc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
