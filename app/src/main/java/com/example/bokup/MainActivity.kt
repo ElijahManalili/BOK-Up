@@ -12,15 +12,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //Buttons
-        var trackBttn : Button = findViewById(R.id.track)
-        var progressBttn : Button = findViewById(R.id.progress)
+        var trackBtn : Button = findViewById(R.id.track)
+        var progressBtn : Button = findViewById(R.id.progress)
+        var targetBtn : Button = findViewById(R.id.target)
 
-       trackBttn.setOnClickListener {
+       targetBtn.setOnClickListener {
+           val intent = Intent(this, Target::class.java)
+           startActivity(intent)
+       }
+
+       trackBtn.setOnClickListener {
             val intent = Intent(this, Track::class.java)
             startActivity(intent)
         }
 
-        progressBttn.setOnClickListener {
+        progressBtn.setOnClickListener {
             val intent = Intent(this, Progress::class.java)
             startActivity(intent)
         }
