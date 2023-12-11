@@ -24,7 +24,8 @@ import androidx.recyclerview.widget.RecyclerView
     }
 
     class ViewHolderClass(itemView: View) : RecyclerView.ViewHolder(itemView){
-        var rvTitle : TextView = itemView.findViewById(R.id.reyclerTitle)
+        var rvTitle : TextView = itemView.findViewById(R.id.calText)
+
 
     }
 
