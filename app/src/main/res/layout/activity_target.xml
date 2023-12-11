@@ -20,7 +20,7 @@
         app:srcCompat="@drawable/bokedup" />
 
     <Button
-        android:id="@+id/backbBtn"
+        android:id="@+id/backBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back"
@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Set"
-        app:layout_constraintBottom_toTopOf="@+id/backbBtn"
+        app:layout_constraintBottom_toTopOf="@+id/backBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextText" />
