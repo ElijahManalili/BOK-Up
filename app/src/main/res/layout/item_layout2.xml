@@ -10,34 +10,34 @@
     app:cardElevation="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="384dp"
-        android:layout_height="81dp">
+        android:layout_width="395dp"
+        android:layout_height="79dp">
 
         <TextView
-            android:id="@+id/calText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sample"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/calTime"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.19"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.761" />
-
-        <TextView
-            android:id="@+id/calTime"
+            android:id="@+id/calTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sample"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.19"
+            app:layout_constraintHorizontal_bias="0.175"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.728" />
+            app:layout_constraintVertical_bias="0.719" />
+
+        <TextView
+            android:id="@+id/calDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sample"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/calTotal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.175"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.571" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
