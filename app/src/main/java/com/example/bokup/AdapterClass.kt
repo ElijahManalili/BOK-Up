@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
     override fun onBindViewHolder(p0: ViewHolderClass, p1: Int ) {
         var currentItems = dataList[p1]
         p0.rvTitle.text = currentItems.cal
-        p0.rvTitle.text = currentItems.timeCal
+        p0.rvTitle2.text = currentItems.timeCal
     }
 
     override fun getItemCount(): Int {
@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView
 
     class ViewHolderClass(itemView: View) : RecyclerView.ViewHolder(itemView){
         var rvTitle : TextView = itemView.findViewById(R.id.calText)
+        var rvTitle2: TextView = itemView.findViewById(R.id.calTime)
 
 
     }
