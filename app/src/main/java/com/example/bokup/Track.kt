@@ -1,29 +1,42 @@
 package com.example.bokup
 
+import android.annotation.SuppressLint
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bokup.R.id.rvTrack
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
-lateinit var databaseReference : DatabaseReference
-lateinit var sharedPreferences : SharedPreferences
-lateinit var recyclerView: RecyclerView
-lateinit var dataList: ArrayList<DataClass>
 
 class Track : AppCompatActivity() {
 
+
+    lateinit var databaseReference: DatabaseReference
+    lateinit var sharedPreferences : SharedPreferences
+    lateinit var recyclerView: RecyclerView
+    lateinit var dataArrayList: ArrayList<DataClass>
+    lateinit var calList: Array<String>
+    lateinit var timeList: Array<String>
+    lateinit var recycleList: ArrayList<String>
+
+
+    @SuppressLint("SuspiciousIndentation", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_track)
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("BOKDatabase")
 
         //Buttons and Text
         var backBtn : Button = findViewById(R.id.backBtn)
@@ -32,6 +45,15 @@ class Track : AppCompatActivity() {
         var targetBtn : Button = findViewById(R.id.targetBtn)
         var timeBtn : Button = findViewById(R.id.timeBtn)
         var calText : EditText = findViewById(R.id.calText)
+
+
+        calList =
+        timeList = arrayListOf(dataArrayList)
+        recyclerView = findViewById (R.id.rvTrack)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.setHasFixedSize(true)
+
+        dataArrayList = arrayListOf<DataClass>()
 
         timeBtn.setOnClickListener {
             // Open Time Picker Dialog
@@ -56,6 +78,7 @@ class Track : AppCompatActivity() {
             startActivity(intent)
         }
 
+
         addBtn.setOnClickListener {
             val time = timeBtn.text.toString().trim()
             val calories = calText.text.toString().trim()
@@ -65,19 +88,15 @@ class Track : AppCompatActivity() {
                 Toast.makeText(this, "Please enter both calories and time", Toast.LENGTH_SHORT).show()
             } else {
                 // Proceed with adding to database
-                databaseReference = FirebaseDatabase.getInstance().getReference("BOKDatabase")
+
                 var calDay = DataClass(time, calories)
-                var dataKey = databaseReference.push().getKey()
+              var dataKey = databaseReference.push().getKey()
                 databaseReference.child("Day").child(dataKey.toString()).setValue(calDay)
                     .addOnSuccessListener {
                         Toast.makeText(this, "Success - ADD", Toast.LENGTH_SHORT).show()
-                    }
-            }
-        }
+                        Log.i("wowowow_caro", dataArrayList.size.toString())
+                   }
 
-        delBtn.setOnClickListener {
-            databaseReference.child("Day").child("2021159586").removeValue().addOnSuccessListener {
-                Toast.makeText(this, "Success - DELETE", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -87,7 +106,23 @@ class Track : AppCompatActivity() {
         sharedEditor.apply()
 
         sharedPreferences.getString("SharedID", "")
+
+        databaseReference.child("Day").get().addOnCompleteListener({task ->
+
+            var task = task.result;
+            dataArrayList.clear()
+            for(e in task.children) {
+                var calNum = e.child("cal").getValue(String::class.java)
+                var calTime = e.child("timeCal").getValue(String::class.java)
+                var calPrint = DataClass(calTime.toString(), calNum.toString())
+                dataArrayList.add(calPrint)
+
+            }
+
+        })
     }
 
-    // Other functions and classes...
+
+
+
 }

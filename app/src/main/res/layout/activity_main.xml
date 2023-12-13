@@ -37,10 +37,8 @@
         android:id="@+id/target"
         android:layout_width="109dp"
         android:layout_height="42dp"
-        android:layout_marginStart="151dp"
-        android:layout_marginTop="92dp"
-        android:layout_marginEnd="151dp"
         android:text="Target"
+        app:layout_constraintBottom_toTopOf="@+id/track"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -49,26 +47,19 @@
         android:id="@+id/track"
         android:layout_width="109dp"
         android:layout_height="42dp"
-        android:layout_marginStart="151dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="151dp"
         android:text="Track"
+        app:layout_constraintBottom_toTopOf="@+id/progress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progress" />
+        app:layout_constraintTop_toBottomOf="@+id/target" />
 
     <Button
         android:id="@+id/progress"
         android:layout_width="109dp"
         android:layout_height="42dp"
-        android:layout_marginStart="151dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="151dp"
-        android:layout_marginBottom="124dp"
         android:text="Progress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/target" />
+        app:layout_constraintTop_toBottomOf="@+id/track" />
 </androidx.constraintlayout.widget.ConstraintLayout>
