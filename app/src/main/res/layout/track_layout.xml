@@ -73,21 +73,6 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/editBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="37dp"
-        android:layout_marginStart="270dp"
-        android:layout_marginTop="10dp"
-        android:text="Edit" />
-
-    <Button
-        android:id="@+id/delBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="37dp"
-        android:layout_marginStart="270dp"
-        android:layout_marginTop="50dp"
-        android:text="Delete" />
 
 
 </androidx.cardview.widget.CardView>
