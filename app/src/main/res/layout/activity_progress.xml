@@ -7,7 +7,7 @@
     tools:context=".Progress">
 
     <Button
-        android:id="@+id/back"
+        android:id="@+id/backBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back"
@@ -19,11 +19,13 @@
         app:layout_constraintVertical_bias="0.898" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvProgress"
         android:layout_width="409dp"
         android:layout_height="580dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:listitem="@layout/progress_layout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

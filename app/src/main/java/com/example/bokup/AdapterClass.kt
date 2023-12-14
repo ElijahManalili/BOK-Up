@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class AdapterClass(private val dataList: ArrayList<DataClass>, private val onEdit: (DataClass, Int) -> Unit, private val onDelete: (DataClass, Int) -> Unit) : RecyclerView.Adapter<AdapterClass.ViewHolderClass>() {
+class AdapterClass(private val dataList : ArrayList<DataClass>) : RecyclerView.Adapter<AdapterClass.ViewHolderClass> (){
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): AdapterClass.ViewHolderClass {
         val itemView = LayoutInflater.from(p0.context).inflate(R.layout.track_layout, p0, false)
