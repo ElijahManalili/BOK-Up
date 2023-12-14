@@ -11,9 +11,12 @@ import android.util.Log
 import android.widget.Adapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bokup.R.id.calText
+import com.example.bokup.R.id.calTotal
 import com.example.bokup.R.id.rvTrack
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -45,6 +48,7 @@ class Track : AppCompatActivity() {
         var targetBtn : Button = findViewById(R.id.targetBtn)
         var timeBtn : Button = findViewById(R.id.timeBtn)
         var calText : EditText = findViewById(R.id.calText)
+
 
         recyclerView = findViewById (R.id.rvTrack)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -96,6 +100,7 @@ class Track : AppCompatActivity() {
                    }
 
             }
+
         }
 
         sharedPreferences = getSharedPreferences("BOKStorage", MODE_PRIVATE)
