@@ -42,7 +42,6 @@ class Track : AppCompatActivity() {
         //Buttons and Text
         var backBtn : Button = findViewById(R.id.backBtn)
         var addBtn : Button = findViewById(R.id.addBtn)
-        var delBtn: Button = findViewById(R.id.delBtn)
         var targetBtn : Button = findViewById(R.id.targetBtn)
         var timeBtn : Button = findViewById(R.id.timeBtn)
         var calText : EditText = findViewById(R.id.calText)
