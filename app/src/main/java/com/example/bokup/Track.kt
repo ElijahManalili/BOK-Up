@@ -39,9 +39,6 @@ class Track : AppCompatActivity() {
     lateinit var timeBtn : Button
     lateinit var totalCal : TextView
 
-    var totalCalories = 0
-//    var totalCal : TextView = findViewById(R.id.totalCal)
-
     @SuppressLint("SuspiciousIndentation", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,12 +47,13 @@ class Track : AppCompatActivity() {
         databaseReference = FirebaseDatabase.getInstance().getReference("BOKDatabase")
 
         //Buttons and Text
-        var backBtn: Button = findViewById(R.id.backBtn)
-        var addBtn: Button = findViewById(R.id.addBtn)
-        timeBtn = findViewById(R.id.timeBtn)
-        var clearBtn: Button = findViewById(R.id.clearBtn)
-        var calText: EditText = findViewById(R.id.calText)
+        var backBtn : Button = findViewById(R.id.backBtn)
+        var addBtn : Button = findViewById(R.id.addBtn)
+        var clearBtn : Button = findViewById(R.id.clearBtn)
+        var endBtn : Button = findViewById(R.id.endBtn)
+        var calText : EditText = findViewById(R.id.calText)
         totalCal = findViewById(R.id.totalCal)
+        timeBtn = findViewById(R.id.timeBtn)
 
         dayRef = databaseReference.child("Day")
         inputRef = dayRef.child("Input")
@@ -86,15 +84,6 @@ class Track : AppCompatActivity() {
             startActivity(intent)
         }
 
-//        targetBtn.setOnClickListener {
-//            val intent = Intent(this, Target::class.java)
-//            startActivity(intent)
-//        }
-
-//        endBtn.setOnClickListener {
-//            val totalSum = dataArrayList.sumOf { it.cal }
-//            totalCal.text = ""
-//        }
 
         addBtn.setOnClickListener {
             val time = timeBtn.text.toString().trim()
@@ -106,18 +95,13 @@ class Track : AppCompatActivity() {
             } else {
                 var calories = caloriesString.toIntOrNull()
                     ?: 0 // Convert to Int, default to 0 if conversion fails
-//                calories += caloriesString.toInt()
-
-//                updateTotalCalories()
 
                 val calDay = DataClass(time, caloriesString)
                 val dataKey = databaseReference.push().getKey()
-                databaseReference.child("Day").child("Input").child(calDay.toString())
-                    .setValue(calDay)
-                    .addOnSuccessListener {
+                databaseReference.child("Day").child("Input").child(calDay.toString()).setValue(calDay).addOnSuccessListener {
                         Toast.makeText(this, "Success - ADD", Toast.LENGTH_SHORT).show()
                         Log.i("wowowow_caro", dataArrayList.size.toString())
-//                        totalCalories += calories
+
                     }
             }
             val intent = Intent(this, Track::class.java)
@@ -131,6 +115,13 @@ class Track : AppCompatActivity() {
             val intent = Intent(this, Track::class.java)
             startActivity(intent)
         }
+
+//        endBtn.setOnClickListener {
+//            databaseReference.child("Day").setValue("Day").addOnSuccessListener {
+//                Toast.makeText(this, "Success - ADD", Toast.LENGTH_SHORT).show()
+//            }
+//
+//        }
 
         sharedPreferences = getSharedPreferences("BOKStorage", MODE_PRIVATE)
         var sharedEditor = sharedPreferences.edit()
@@ -154,16 +145,6 @@ class Track : AppCompatActivity() {
         })
 
     }
-
-//    private fun updateTotalCalories() {
-//        // Fetch your data from the database or SharedPreferences
-//
-//
-//        val totalCalories = getData()
-//
-//        // Update the totalCal TextView
-//        totalCal.text = "$totalCalories"
-//    }
 
     private fun getData() {
 
@@ -206,8 +187,6 @@ class Track : AppCompatActivity() {
 
                 var sum = 0
 
-
-
                 for(i in snapshot.children){
                     sum = sum+i.child("cal").value.toString().toInt()
                 }
@@ -220,15 +199,8 @@ class Track : AppCompatActivity() {
             }
         })
 
-
-//            totalCalories += calories // Add to total
-
         return totalCal.toString()
     }
 
-//    private fun sumCal(){
-//
-//
-//    }
 
 }
