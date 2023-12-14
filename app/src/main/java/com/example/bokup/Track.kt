@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bokup.R.id.calText
 import com.example.bokup.R.id.endBtn
 import com.example.bokup.R.id.rvTrack
 import com.google.firebase.database.DataSnapshot
@@ -33,6 +34,8 @@ class Track : AppCompatActivity() {
     lateinit var sharedPreferences : SharedPreferences
     lateinit var recyclerView: RecyclerView
     lateinit var dataArrayList: ArrayList<DataClass>
+    var totalCalories = 0
+//    var totalCal : TextView = findViewById(R.id.totalCal)
 
     @SuppressLint("SuspiciousIndentation", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +58,8 @@ class Track : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
         dataArrayList = arrayListOf<DataClass>()
         getData()
+
+//        totalCal.text = "$totalCalories"
 
         timeBtn.setOnClickListener {
             // Open Time Picker Dialog
@@ -86,22 +91,23 @@ class Track : AppCompatActivity() {
 
         addBtn.setOnClickListener {
             val time = timeBtn.text.toString().trim()
-            val calories = calText.text.toString().trim()
+            val caloriesString = calText.text.toString().trim()
 
-            // Check if time or calories is empty
-            if (time.isEmpty() || calories.isEmpty()) {
+            if (time.isEmpty() || caloriesString.isEmpty()) {
                 Toast.makeText(this, "Please enter both calories and time", Toast.LENGTH_SHORT).show()
             } else {
-                // Proceed with adding to database
+                val calories = caloriesString.toIntOrNull() ?: 0 // Convert to Int, default to 0 if conversion fails
+                totalCalories += calories // Add to total
 
-                var calDay = DataClass(time, calories)
-                var dataKey = databaseReference.push().getKey()
+//                updateTotalCalories()
+
+                val calDay = DataClass(time, caloriesString)
+                val dataKey = databaseReference.push().getKey()
                 databaseReference.child("Day").child("Input").child(calDay.toString()).setValue(calDay)
                     .addOnSuccessListener {
                         Toast.makeText(this, "Success - ADD", Toast.LENGTH_SHORT).show()
                         Log.i("wowowow_caro", dataArrayList.size.toString())
-                   }
-
+                    }
             }
             val intent = Intent(this, Track::class.java)
             startActivity(intent)
@@ -135,7 +141,19 @@ class Track : AppCompatActivity() {
             }
 
         })
+
+        totalCal.text = "$totalCalories"
     }
+
+//    private fun updateTotalCalories() {
+//        // Fetch your data from the database or SharedPreferences
+//
+//
+//        val totalCalories = getData()
+//
+//        // Update the totalCal TextView
+//        totalCal.text = "$totalCalories"
+//    }
 
     private fun getData() {
 
@@ -152,6 +170,7 @@ class Track : AppCompatActivity() {
 
                         val data = dataSnapshot.getValue(DataClass::class.java)
                         dataArrayList.add(data!!)
+
 
                     }
                     setupRecyclerView()
