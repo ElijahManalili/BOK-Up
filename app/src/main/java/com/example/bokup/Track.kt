@@ -6,15 +6,20 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.renderscript.Sampler.Value
 import android.util.Log
+import android.widget.Adapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bokup.R.id.rvTrack
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -26,10 +31,6 @@ class Track : AppCompatActivity() {
     lateinit var sharedPreferences : SharedPreferences
     lateinit var recyclerView: RecyclerView
     lateinit var dataArrayList: ArrayList<DataClass>
-    lateinit var calList: Array<String>
-    lateinit var timeList: Array<String>
-    lateinit var recycleList: ArrayList<String>
-
 
     @SuppressLint("SuspiciousIndentation", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,14 +47,12 @@ class Track : AppCompatActivity() {
         var timeBtn : Button = findViewById(R.id.timeBtn)
         var calText : EditText = findViewById(R.id.calText)
 
-
-        calList =
-        timeList = arrayListOf(dataArrayList)
         recyclerView = findViewById (R.id.rvTrack)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
 
         dataArrayList = arrayListOf<DataClass>()
+        getData()
 
         timeBtn.setOnClickListener {
             // Open Time Picker Dialog
@@ -122,7 +121,35 @@ class Track : AppCompatActivity() {
         })
     }
 
+    private fun getData() {
 
+        databaseReference = FirebaseDatabase.getInstance().getReference("BOKDatabase")
+
+        databaseReference.addValueEventListener(object : ValueEventListener{
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                if (snapshot.exists()){
+
+                    for (dataSnapshot in snapshot.children){
+
+
+                        val data = dataSnapshot.getValue(DataClass::class.java)
+                        dataArrayList.add(data!!)
+
+                    }
+
+                    recyclerView.adapter = AdapterClass(dataArrayList)
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
 
 
 }

@@ -3,20 +3,20 @@ package com.example.bokup
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
- class AdapterClass(var dataList : ArrayList<DataClass>) : RecyclerView.Adapter<AdapterClass.ViewHolderClass> (){
+ class AdapterClass(private val dataList : ArrayList<DataClass>) : RecyclerView.Adapter<AdapterClass.ViewHolderClass> (){
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): AdapterClass.ViewHolderClass {
-        var itemView = LayoutInflater.from(p0.context).inflate(R.layout.item_layout, p0, false)
+        var itemView = LayoutInflater.from(p0.context).inflate(R.layout.track_layout, p0, false)
         return ViewHolderClass(itemView)
     }
 
-    override fun onBindViewHolder(p0: ViewHolderClass, p1: Int ) {
-        var currentItems = dataList[p1]
-        p0.cal.text = currentItems.cal
-        p0.timeCal.text = currentItems.timeCal
+    override fun onBindViewHolder(holder: ViewHolderClass, position: Int ) {
+
+        var currentItems = dataList[position]
+        holder.timeCal.text = currentItems.timeCal
+        holder.cal.text = currentItems.cal
     }
 
     override fun getItemCount(): Int {
@@ -24,11 +24,9 @@ import androidx.recyclerview.widget.RecyclerView
     }
 
     class ViewHolderClass(itemView: View) : RecyclerView.ViewHolder(itemView){
-        var cal : TextView = itemView.findViewById(R.id.calText)
-        var timeCal: TextView = itemView.findViewById(R.id.calTime)
-        var targetCal: TextView = itemView.findViewById(R.id.calTarget)
 
-
+        var timeCal: TextView = itemView.findViewById(R.id.tvcalTime)
+        var cal : TextView = itemView.findViewById(R.id.tvcalText)
     }
 
 }

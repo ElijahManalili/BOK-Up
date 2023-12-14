@@ -25,12 +25,13 @@
 
             />
 
-            <TextView
-                android:id="@+id/calTime"
+            <EditText
+                android:id="@+id/tvcalTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="12:12pm"
+                android:inputType="time"
                 android:textSize="16sp"
 
 
@@ -47,18 +48,19 @@
 
             />
 
-            <TextView
-                android:id="@+id/calText"
+            <EditText
+                android:id="@+id/tvcalText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="1000"
+                android:inputType="number"
                 android:textSize="16sp"
 
 
                 />
             <TextView
-                android:id="@+id/calories"
+                android:id="@+id/tvcalories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -70,6 +72,22 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/editBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:layout_marginStart="270dp"
+        android:layout_marginTop="10dp"
+        android:text="Edit" />
+
+    <Button
+        android:id="@+id/delBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="37dp"
+        android:layout_marginStart="270dp"
+        android:layout_marginTop="50dp"
+        android:text="Delete" />
 
 
 </androidx.cardview.widget.CardView>
