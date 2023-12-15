@@ -12,26 +12,26 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginVertical="6dp"
+        android:layout_marginStart="16dp"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
 
-
             />
 
-            <EditText
+            <TextView
                 android:id="@+id/tvcalTime"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="12:12pm"
+                android:layout_height="match_parent"
+                android:layout_marginStart="260dp"
+                android:layout_marginTop="5dp"
                 android:inputType="time"
+                android:text="Time"
                 android:textSize="16sp"
 
 
@@ -41,38 +41,52 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="46dp"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
 
 
             />
 
-            <EditText
+            <TextView
                 android:id="@+id/tvcalText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="1000"
+                android:layout_marginStart="220dp"
                 android:inputType="number"
+                android:text=""
                 android:textSize="16sp"
 
 
                 />
+
             <TextView
                 android:id="@+id/tvcalories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="20dp"
                 android:text="Calories"
                 android:textSize="16sp"
 
 
                 />
+
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-320dp"
+                android:layout_marginTop="-0dp"
+                android:inputType="number"
+                android:text=""
+                android:textSize="20sp" />
+            />
+
+
         </LinearLayout>
 
     </LinearLayout>
-
 
 
 </androidx.cardview.widget.CardView>

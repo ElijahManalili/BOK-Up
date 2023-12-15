@@ -4,19 +4,17 @@ import android.annotation.SuppressLint
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.content.SharedPreferences
+import android.icu.text.SimpleDateFormat
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.renderscript.Sampler.Value
 import android.util.Log
-import android.widget.Adapter
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bokup.R.id.calText
-import com.example.bokup.R.id.rvTrack
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -32,12 +30,16 @@ class Track : AppCompatActivity() {
     lateinit var databaseReference: DatabaseReference
     lateinit var sharedPreferences : SharedPreferences
     lateinit var recyclerView: RecyclerView
-    lateinit var dataArrayList: ArrayList<DataClass>
-    lateinit var dayRef : DatabaseReference
+    lateinit var dataArrayList: ArrayList<TrackDataClass>
     lateinit var inputRef : DatabaseReference
     lateinit var outputRef : DatabaseReference
+    lateinit var bokRef : DatabaseReference
     lateinit var timeBtn : Button
     lateinit var totalCal : TextView
+    lateinit var dailyRef: DatabaseReference
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    private var currentDate: String = dateFormat.format(Date())
+
 
     @SuppressLint("SuspiciousIndentation", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,18 +53,23 @@ class Track : AppCompatActivity() {
         var addBtn : Button = findViewById(R.id.addBtn)
         var clearBtn : Button = findViewById(R.id.clearBtn)
         var endBtn : Button = findViewById(R.id.endBtn)
+//      var dateBtn : Button = findViewById(R.id.dateBtn)
         var calText : EditText = findViewById(R.id.calText)
+        var caloriesString = 0
+        var time = 0
+        var currentDate = dateFormat.format(Date())
+
+        dailyRef = databaseReference.child("Days").child(currentDate)
+        bokRef = databaseReference
+        inputRef = dailyRef.child("Input")
+        outputRef = dailyRef.child("Output")
         totalCal = findViewById(R.id.totalCal)
         timeBtn = findViewById(R.id.timeBtn)
-
-        dayRef = databaseReference.child("Day")
-        inputRef = dayRef.child("Input")
-        outputRef = dayRef.child("Output")
 
         recyclerView = findViewById(R.id.rvTrack)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
-        dataArrayList = arrayListOf<DataClass>()
+        dataArrayList = arrayListOf<TrackDataClass>()
         getData()
         sumCal()
 
@@ -79,49 +86,54 @@ class Track : AppCompatActivity() {
             timePickerDialog.show()
         }
 
+        addBtn.setOnClickListener {
+            // Update currentDate to the current system date
+            currentDate = dateFormat.format(Date())
+
+            val selectedTime = timeBtn.text.toString().trim()  // Get the selected time
+            val caloriesString = calText.text.toString().trim()
+
+            if (selectedTime.isEmpty() || caloriesString.isEmpty()) {
+                Toast.makeText(this, "Please enter time and calories", Toast.LENGTH_SHORT).show()
+            } else {
+                val calories = caloriesString.toIntOrNull() ?: 0
+                val calDay = TrackDataClass(selectedTime, caloriesString)
+                calDay.dateCal = currentDate  // Set the currentDate
+
+                // Use inputRef which points to the correct day's "Input" node
+                inputRef.child(calDay.toString()).setValue(calDay).addOnSuccessListener {
+                    Toast.makeText(this, "Success - ADD", Toast.LENGTH_SHORT).show()
+                    Log.i("Track", dataArrayList.size.toString())
+                    dataArrayList.add(calDay) // Add new data to the local list
+                    recyclerView.adapter?.notifyDataSetChanged() // Update RecyclerView
+                }
+                val intent = Intent(this, Track::class.java)
+                startActivity(intent)
+                sumCal()
+            }
+        }
+
+
         backBtn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
-
-        addBtn.setOnClickListener {
-            val time = timeBtn.text.toString().trim()
-            val caloriesString = calText.text.toString().trim()
-
-            if (time.isEmpty() || caloriesString.isEmpty()) {
-                Toast.makeText(this, "Please enter both calories and time", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                var calories = caloriesString.toIntOrNull()
-                    ?: 0 // Convert to Int, default to 0 if conversion fails
-
-                val calDay = DataClass(time, caloriesString)
-                val dataKey = databaseReference.push().getKey()
-                databaseReference.child("Day").child("Input").child(calDay.toString()).setValue(calDay).addOnSuccessListener {
-                        Toast.makeText(this, "Success - ADD", Toast.LENGTH_SHORT).show()
-                        Log.i("wowowow_caro", dataArrayList.size.toString())
-
-                    }
-            }
-            val intent = Intent(this, Track::class.java)
-            startActivity(intent)
-        }
-
         clearBtn.setOnClickListener {
-            databaseReference.child("Day").child("Input").removeValue().addOnSuccessListener {
+            inputRef.removeValue().addOnSuccessListener {
                 Toast.makeText(this, "Success - DELETE", Toast.LENGTH_SHORT).show()
             }
             val intent = Intent(this, Track::class.java)
             startActivity(intent)
         }
 
-//        endBtn.setOnClickListener {
-//            databaseReference.child("Day").setValue("Day").addOnSuccessListener {
-//                Toast.makeText(this, "Success - ADD", Toast.LENGTH_SHORT).show()
-//            }
-//
-//        }
+        endBtn.setOnClickListener {
+            dataArrayList.clear()
+
+            // Notify the adapter of the change
+            recyclerView.adapter?.notifyDataSetChanged()
+            totalCal.visibility = View.GONE
+        }
 
         sharedPreferences = getSharedPreferences("BOKStorage", MODE_PRIVATE)
         var sharedEditor = sharedPreferences.edit()
@@ -130,20 +142,28 @@ class Track : AppCompatActivity() {
 
         sharedPreferences.getString("SharedID", "")
 
-        databaseReference.child("Day").child("Input").get().addOnCompleteListener({ task ->
+        inputRef.get().addOnCompleteListener({ task ->
 
             var task = task.result;
             dataArrayList.clear()
             for (e in task.children) {
                 var calNum = e.child("cal").getValue(String::class.java)
                 var calTime = e.child("timeCal").getValue(String::class.java)
-                var calPrint = DataClass(calTime.toString(), calNum.toString())
+                var calDate = e.child("dateCal").getValue(String::class.java)
+                var calPrint = TrackDataClass(calTime.toString(), calNum.toString(), calDate.toString())
                 dataArrayList.add(calPrint)
 
             }
 
         })
 
+    }
+
+    private fun updateDailyReference() {
+        dailyRef = databaseReference.child("Days").child(currentDate)
+        inputRef = dailyRef.child("Input")
+        outputRef = dailyRef.child("Output")
+        // You might want to also clear and reload data for the new date
     }
 
     private fun getData() {
@@ -159,12 +179,12 @@ class Track : AppCompatActivity() {
                     for (dataSnapshot in snapshot.children){
 
 
-                        val data = dataSnapshot.getValue(DataClass::class.java)
+                        val data = dataSnapshot.getValue(TrackDataClass::class.java)
                         dataArrayList.add(data!!)
 
 
                     }
-                    recyclerView.adapter = AdapterClass(dataArrayList)
+                    recyclerView.adapter = TrackAdapter(dataArrayList)
                 }
 
             }
@@ -176,26 +196,25 @@ class Track : AppCompatActivity() {
         })
     }
 
-    fun sumCal() :String {
-        val time = timeBtn.text.toString()
-        val caloriesString = R.id.calText.toString()
-        val calories = caloriesString.toIntOrNull()
+    fun sumCal(): String {
+        // Use the selectedDate to reference the correct day's data in Firebase
+        val inputRefForSelectedDate = databaseReference.child("Days").child(currentDate).child("Input")
 
-
-        inputRef.addListenerForSingleValueEvent(object : ValueEventListener{
+        inputRefForSelectedDate.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-
                 var sum = 0
-
-                for(i in snapshot.children){
-                    sum = sum+i.child("cal").value.toString().toInt()
+                for (i in snapshot.children) {
+                    val calValueString = i.child("cal").value?.toString()
+                    val calValue = calValueString?.toIntOrNull() ?: 0 // Safely convert to Int
+                    sum += calValue
                 }
-                outputRef.child("Total").setValue(sum)
+                val outputRefForSelectedDate = databaseReference.child("Days").child(currentDate).child("Output")
+                outputRefForSelectedDate.child("Total").setValue(sum)
                 totalCal.text = sum.toString()
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                // Handle potential errors here
             }
         })
 

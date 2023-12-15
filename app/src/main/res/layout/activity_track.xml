@@ -7,6 +7,18 @@
     tools:context=".Track">
 
 
+<!--    <Button-->
+<!--        android:id="@+id/dateBtn"-->
+<!--        android:layout_width="103dp"-->
+<!--        android:layout_height="38dp"-->
+<!--        android:text="Date"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.717"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.666" />-->
+
     <Button
         android:id="@+id/endBtn"
         android:layout_width="wrap_content"
@@ -35,10 +47,10 @@
         android:id="@+id/clearBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="44dp"
         android:text="Clear"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addBtn" />
 
@@ -55,14 +67,14 @@
 
     <Button
         android:id="@+id/timeBtn"
-        android:layout_width="159dp"
-        android:layout_height="44dp"
+        android:layout_width="103dp"
+        android:layout_height="38dp"
         android:text="Time"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.666" />
+        app:layout_constraintVertical_bias="0.67" />
 
     <TextView
         android:id="@+id/textView2"
@@ -80,7 +92,6 @@
         android:id="@+id/totalCal"
         android:layout_width="69dp"
         android:layout_height="24dp"
-        android:text="50"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

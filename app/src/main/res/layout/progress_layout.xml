@@ -14,30 +14,40 @@
         android:layout_height="79dp">
 
         <TextView
-            android:id="@+id/calTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sample"
+            android:id="@+id/tvcalDate"
+            android:layout_width="144dp"
+            android:layout_height="31dp"
+            android:layout_marginStart="16dp"
+            android:text="Date"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvcalTotal"
+            android:layout_width="71dp"
+            android:layout_height="31dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="24dp"
+            android:text="Calories"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.175"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.719" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
-            android:id="@+id/calDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sample"
+            android:id="@+id/totalText"
+            android:layout_width="103dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="12dp"
+            android:text="Total Calories:"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/calTotal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.175"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tvcalTotal"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.571" />
+            app:layout_constraintVertical_bias="0.489" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
