@@ -32,6 +32,7 @@
             android:layout_marginBottom="24dp"
             android:text="Calories"
             android:textSize="16sp"
+            android:inputType="number"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

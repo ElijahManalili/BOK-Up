@@ -209,7 +209,7 @@ class Track : AppCompatActivity() {
                     sum += calValue
                 }
                 val outputRefForSelectedDate = databaseReference.child("Days").child(currentDate).child("Output")
-                outputRefForSelectedDate.child("Total").setValue(sum)
+                outputRefForSelectedDate.child("totalCal").setValue(sum)
                 totalCal.text = sum.toString()
             }
 

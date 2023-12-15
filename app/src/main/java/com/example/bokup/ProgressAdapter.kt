@@ -17,7 +17,7 @@ class ProgressAdapter(private val dataList : ArrayList<ProgressDataClass>) : Rec
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
         val currentItem = dataList[position]
         holder.dateCal.text = currentItem.dateCal ?: "No Date"
-        holder.tvcalTotal.text = currentItem.totalCal ?: "No Total"
+        holder.totalCal.text = currentItem.totalCal ?: "No Total"
     }
 
     override fun getItemCount(): Int {
@@ -26,7 +26,7 @@ class ProgressAdapter(private val dataList : ArrayList<ProgressDataClass>) : Rec
 
     class ViewHolderClass(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var dateCal: TextView = itemView.findViewById(R.id.tvcalDate)
-        var tvcalTotal: TextView = itemView.findViewById(R.id.tvcalTotal)  // Corrected ID
+        var totalCal: TextView = itemView.findViewById(R.id.tvcalTotal)
     }
 
     fun hideItems() {
